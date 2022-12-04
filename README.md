@@ -1,2 +1,2 @@
-# Advent_of_Code
-My Advent of Code solutions
+# Advent of Code
+My Advent of Code 2022 solutions
