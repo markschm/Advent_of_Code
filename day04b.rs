@@ -1,11 +1,15 @@
 use std::collections::HashSet;
 
 fn main() {
+    let input = include_bytes!("input/day04");
+    let mut card_amounts: Vec<usize> = vec![1; input.iter().filter(|&&b| b == b'\n').count() + 1];
+
     println!(
         "Solution 4a: {}",
-        include_bytes!("input/day04")
+        input
             .split(|&b| b == b'\n')
-            .map(|line| {
+            .enumerate()
+            .map(|(i, line)| {
                 if let [_, numbers] = line.split(|&b| b == b':').collect::<Vec<_>>().as_slice() {
                     if let [winning_numbers, your_numbers] = numbers.split(|&b| b == b'|').collect::<Vec<_>>().as_slice() {
                         
@@ -13,11 +17,14 @@ fn main() {
                             .intersection(&to_num_set(winning_numbers))
                             .count();
         
-                        if wins == 0 {
-                            0
-                        } else {
-                            usize::pow(2, (wins - 1) as u32)
-                        }
+                        (1..wins + 1)
+                            .for_each(|n| {
+                                if i + n < card_amounts.len() {
+                                    card_amounts[i + n] += 1 * card_amounts[i];
+                                }
+                            });
+                        
+                        card_amounts[i]
                     } else {
                         panic!("Invalid Input");
                     }
