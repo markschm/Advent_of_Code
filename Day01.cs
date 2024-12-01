@@ -1,5 +1,6 @@
 #load "Utils.csx"
 using System;
+using System.Linq;
 
 
 string data = Utils.FileToString("day01");
@@ -43,3 +44,26 @@ for (int i = 0; i < fileSize; i++)
 
 Console.WriteLine($"Part 1: {totalDiff}");
 Console.WriteLine($"Part 2: {similarityScore}");
+
+
+// ////////////////////////////////////////////////////////////////////////////
+// Trying to learn C# while doing this so another way w/ Linq
+
+// var parsedData = data.Split("\n")
+//     .Select(line => line.Split(" ", StringSplitOptions.RemoveEmptyEntries))
+//     .Select(nums => (Left: int.Parse(nums[0]), Right: int.Parse(nums[1])))
+//     .ToArray();
+
+// int[] left = parsedData.Select(pair => pair.Left).OrderBy(x => x).ToArray();
+// int[] right = parsedData.Select(pair => pair.Right).OrderBy(x => x).ToArray();
+
+// int totalDiff = left.Zip(right, (l, r) => Math.Abs(l - r)).Sum();
+
+// var freqMap = right.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+// int similarityScore = left
+//     .Where(num => freqMap.ContainsKey(num))
+//     .Select(num => num * freqMap[num])
+//     .Sum();
+
+// Console.WriteLine($"Part 1: {totalDiff}");
+// Console.WriteLine($"Part 2: {similarityScore}");
