@@ -10,4 +10,21 @@ public static class Utils
             return streamReader.ReadToEnd();
         }
     }
+
+    public static (T, T) SplitInTwoAndConvert<T>(
+        string sep, string input, Func<string, T> converter)
+    {
+        var splitInput = input.Split(sep, StringSplitOptions.RemoveEmptyEntries)
+            .Select(converter)
+            .ToArray();
+
+        return (splitInput[0], splitInput[1]);
+    }
+
+    public static void Swap<T>(ref T a, ref T b)
+    {
+        T temp = a;
+        a = b;
+        b = temp;
+    }
 }
