@@ -27,4 +27,7 @@ public static class Utils
         a = b;
         b = temp;
     }
+
+    public static (int, int) AddPair((int, int) a, (int, int) b) 
+        => (a.Item1 + b.Item1, a.Item2 + b.Item2);
 }
