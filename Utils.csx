@@ -1,6 +1,9 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 
+// class won't be organized it's just a bunch of functions that I thought
+// i'd use more than once during these challenges so I just tossed them in here
 public static class Utils 
 {
     public static string FileToString(string filename) 
@@ -11,14 +14,16 @@ public static class Utils
         }
     }
 
-    public static (T, T) SplitInTwoAndConvert<T>(
-        string sep, string input, Func<string, T> converter)
-    {
-        var splitInput = input.Split(sep, StringSplitOptions.RemoveEmptyEntries)
+    public static T[] SplitAndConvert<T>(string sep, string input, Func<string, T> converter)
+        => input.Split(sep, StringSplitOptions.RemoveEmptyEntries)
             .Select(converter)
             .ToArray();
 
-        return (splitInput[0], splitInput[1]);
+    public static (T, T) SplitInTwoAndConvert<T>(
+        string sep, string input, Func<string, T> converter)
+    {
+        var res = SplitAndConvert(sep, input, converter);
+        return (res[0], res[1]);
     }
 
     public static void Swap<T>(ref T a, ref T b)
@@ -30,4 +35,32 @@ public static class Utils
 
     public static (int, int) AddPair((int, int) a, (int, int) b) 
         => (a.Item1 + b.Item1, a.Item2 + b.Item2);
+
+    public static int CountSymbolInGrid(char[][] grid, char symbol) 
+        => grid.Select(line => line.Where(ch => ch == symbol).Count()).Sum();
+
+    public static char[][] BuildGrid(int width, int height, char defaultVal = ' ')
+        => Enumerable.Range(0, height)
+            .Select(_ => Enumerable.Repeat(defaultVal, width).ToArray())
+            .ToArray();
+
+
+    // Display Functions
+    public static void PrintGrid(char[][] grid) => Array.ForEach(grid, Console.WriteLine);
+    public static void PrintGrid(string[] grid) => Array.ForEach(grid, Console.WriteLine);
+    
+    public static void PrintMap<K, V>(Dictionary<K, V> map, Func<V, string> converter)
+    {
+        foreach (var entry in map)
+        {
+            Console.WriteLine($"{entry.Key}: {converter(entry.Value)}");
+        }
+    }
+    public static void PrintMap<K, V>(Dictionary<K, V> map)
+    {
+        PrintMap(map, (val => val?.ToString() ?? "NO STRING REPRESENTATION"));
+    }
+
+    public static void PrintList<T>(List<T> list)
+        => Console.WriteLine(string.Join(", ", list));
 }
