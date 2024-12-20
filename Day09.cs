@@ -103,10 +103,7 @@ var diskBlocks2 = diskBlocks.Select(element => element).ToList();
 CompactDiskFragmentation(diskBlocks);
 long part1 = diskBlocks.Select((element, index) => (long)(element * index)).Sum();
 
-Utils.PrintList(diskBlocks2);
 CompactDiskNoFragmentation(diskBlocks2);
-Utils.PrintList(diskBlocks2);
-
 long part2 = diskBlocks2
     .Select((element, index) => element != -1 ? (long)(element * index) : 0)
     .Sum();

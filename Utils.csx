@@ -6,6 +6,16 @@ using System.Collections.Generic;
 // i'd use more than once during these challenges so I just tossed them in here
 public static class Utils 
 {
+    // constants
+    public static readonly (int, int)[] DIRECTIONS = new (int, int)[] {
+        (1, 0), (0, 1), (-1, 0), (0, -1)
+    };
+
+    public static readonly (int, int)[] CORNER_DIRECTIONS = new (int, int)[] {
+        (1, 1), (-1, 1), (1, -1), (-1, -1)
+    };
+
+
     public static string FileToString(string filename) 
     {
         using (StreamReader streamReader = new StreamReader("input/" + filename))
@@ -43,6 +53,16 @@ public static class Utils
         => Enumerable.Range(0, height)
             .Select(_ => Enumerable.Repeat(defaultVal, width).ToArray())
             .ToArray();
+
+    public static bool ValidLocationInGrid(string[] grid, int x, int y)
+    {
+        return 0 <= y && y < grid.Length && 0 <= x && x < grid[0].Length;
+    }
+    public static bool ValidLocationInGrid(string[] grid, (int, int) location)
+    {
+        var (x, y) = location;
+        return ValidLocationInGrid(grid, x, y);
+    }
 
 
     // Display Functions
