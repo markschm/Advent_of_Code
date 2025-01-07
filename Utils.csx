@@ -64,6 +64,32 @@ public static class Utils
         return ValidLocationInGrid(grid, x, y);
     }
 
+    public static (int, int) FindLocationInGrid(char[][] grid, char c)
+    {
+        for (int y = 0; y < grid.Length; y++)
+        {
+            for (int x = 0; x < grid[0].Length; x++)
+            {
+                if (grid[y][x] == c)
+                {
+                    return (x, y);
+                }
+            }
+        }
+
+        return (-1, -1);
+    }
+
+    public static void SwapInGrid(char[][] grid, (int, int) a, (int, int) b)
+    {
+        var (aX, aY) = a;
+        var (bX, bY) = b;
+
+        char temp = grid[aY][aX];
+        grid[aY][aX] = grid[bY][bX];
+        grid[bY][bX] = temp; 
+    }
+
 
     // Display Functions
     public static void PrintGrid(char[][] grid) => Array.ForEach(grid, Console.WriteLine);
